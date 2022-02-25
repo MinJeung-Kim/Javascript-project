@@ -1,4 +1,5 @@
 const path = require("path");
+
 const webpack = require("webpack");
 const childProcess = require("child_process");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -75,8 +76,9 @@ module.exports = {
         },
       },
       {
-        test: /\.js$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         loader: "babel-loader",
+        include: [path.resolve(__dirname, "app")],
         // node_modules의 코드를 바벨로더가 처리하지 않게 설정.
         exclude: /node_modules/,
       },
@@ -85,7 +87,9 @@ module.exports = {
   plugins: [
     new webpack.BannerPlugin({
       banner: ` 
-        Build Date : ${new Date().toLocaleDateString()} 
+        Build Date : ${new Date().toLocaleDateString()}
+        Commit Version: ${childProcess.execSync("git rev-parse --short HEAD")}
+        Author: ${childProcess.execSync("git config user.name")}
       `,
     }),
     new webpack.DefinePlugin({

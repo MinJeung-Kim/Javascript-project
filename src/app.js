@@ -1,5 +1,5 @@
-import form from "./form";
-import result from "./result";
+import form from "./search/form";
+import result from "./search/result";
 import "./app.css";
 
 let resultEl;
